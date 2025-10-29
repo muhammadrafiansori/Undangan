@@ -18,9 +18,10 @@
         :root {
             --font-heading: 'Playfair Display', serif;
             --font-body: 'Montserrat', sans-serif;
-            --color-ivory: #FDFDF6;
-            --color-text: #3A3A3A;
-            --color-accent: #BFA181; /* Soft Gold/Bronze */
+            /* Blue theme */
+            --color-ivory: #E6EEF7; /* light blue background */
+            --color-text: #000000; /* pure black text */
+            --color-accent: #3B6EA5; /* elegant desaturated blue */
         }
         
         body {
@@ -44,14 +45,14 @@
 
         /* --- Elegant Pattern Background --- */
         .bg-elegant-pattern {
-            /* subtle floral pattern using SVG data URI */
-            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23BFA181' fill-opacity='0.07'%3E%3Cpath d='M20 6c1.5 3 1.5 5.5 0 8-3 1.5-5.5 1.5-8 0-1.5-3-1.5-5.5 0-8 3-1.5 5.5-1.5 8 0z'/%3E%3Cpath d='M34 20c1.5 3 1.5 5.5 0 8-3 1.5-5.5 1.5-8 0-1.5-3-1.5-5.5 0-8 3-1.5 5.5-1.5 8 0z'/%3E%3Ccircle cx='8' cy='32' r='3'/%3E%3Ccircle cx='32' cy='8' r='2'/%3E%3C/g%3E%3C/svg%3E");
+            /* subtle floral pattern using SVG data URI (blue) */
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%233B6EA5' fill-opacity='0.07'%3E%3Cpath d='M20 6c1.5 3 1.5 5.5 0 8-3 1.5-5.5 1.5-8 0-1.5-3-1.5-5.5 0-8 3-1.5 5.5-1.5 8 0z'/%3E%3Cpath d='M34 20c1.5 3 1.5 5.5 0 8-3 1.5-5.5 1.5-8 0-1.5-3-1.5-5.5 0-8 3-1.5 5.5-1.5 8 0z'/%3E%3Ccircle cx='8' cy='32' r='3'/%3E%3Ccircle cx='32' cy='8' r='2'/%3E%3C/g%3E%3C/svg%3E");
             background-size: 40px 40px;
         }
 
         /* --- Elegant Borders & Shadows --- */
         .elegant-border {
-            border: 1px solid rgba(191, 161, 129, 0.45);
+            border: 1px solid rgba(59, 110, 165, 0.35);
             box-shadow: 0 10px 24px rgba(0,0,0,0.08), inset 0 0 0 1px rgba(255,255,255,0.6);
         }
 
@@ -68,11 +69,17 @@
         .floral-bottom-left { bottom: 12px; left: 12px; transform: scaleY(-1); }
         .floral-bottom-right { bottom: 12px; right: 12px; transform: rotate(180deg); }
 
+        /* Larger decorative flowers for sections */
+        .section-decor { position: relative; }
+        .floral-large { width: 200px; height: 200px; opacity: 0.22; }
+        .floral-left { position: absolute; top: -24px; left: -12px; }
+        .floral-right { position: absolute; bottom: -24px; right: -12px; transform: scaleX(-1); }
+
         /* --- Section Divider (Floral) --- */
         .section-divider {
             width: 200px;
             margin: 2.5rem auto 0 auto;
-            opacity: 0.6;
+            opacity: 0.7;
         }
 
         /* --- Gentle Petals Animation --- */
@@ -88,7 +95,7 @@
             width: 12px;
             height: 12px;
             border-radius: 9999px 9999px 9999px 0;
-            background: rgba(191,161,129,0.25);
+            background: rgba(59,110,165,0.22);
             filter: blur(.3px);
             animation: float-petal linear infinite;
         }
@@ -186,6 +193,24 @@
             width: 1px;
             height: 1px;
         }
+
+        /* --- Lightbox (Full-size Image Viewer) --- */
+        #lightbox-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+        #lightbox-overlay.visible { display: flex; }
+        #lightbox-overlay img {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -193,23 +218,28 @@
     <!-- Layar Pembuka (Cover) -->
     <div id="cover-screen" class="bg-elegant-pattern">
         <!-- Floral corners -->
-        <svg class="floral-corner floral-top-left" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%23BFA181" d="M5 95c20-5 40-25 45-45C55 30 70 15 95 5 75 25 70 45 60 60 45 70 25 75 5 95z"/></svg>
-        <svg class="floral-corner floral-top-right" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%23BFA181" d="M5 95c20-5 40-25 45-45C55 30 70 15 95 5 75 25 70 45 60 60 45 70 25 75 5 95z"/></svg>
-        <svg class="floral-corner floral-bottom-left" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%23BFA181" d="M5 95c20-5 40-25 45-45C55 30 70 15 95 5 75 25 70 45 60 60 45 70 25 75 5 95z"/></svg>
-        <svg class="floral-corner floral-bottom-right" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%23BFA181" d="M5 95c20-5 40-25 45-45C55 30 70 15 95 5 75 25 70 45 60 60 45 70 25 75 5 95z"/></svg>
+        <svg class="floral-corner floral-top-left" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%233B6EA5" d="M5 95c20-5 40-25 45-45C55 30 70 15 95 5 75 25 70 45 60 60 45 70 25 75 5 95z"/></svg>
+        <svg class="floral-corner floral-top-right" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%233B6EA5" d="M5 95c20-5 40-25 45-45C55 30 70 15 95 5 75 25 70 45 60 60 45 70 25 75 5 95z"/></svg>
+        <svg class="floral-corner floral-bottom-left" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%233B6EA5" d="M5 95c20-5 40-25 45-45C55 30 70 15 95 5 75 25 70 45 60 60 45 70 25 75 5 95z"/></svg>
+        <svg class="floral-corner floral-bottom-right" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%233B6EA5" d="M5 95c20-5 40-25 45-45C55 30 70 15 95 5 75 25 70 45 60 60 45 70 25 75 5 95z"/></svg>
         <p class="text-lg" style="color: var(--color-text);">Undangan Pernikahan</p>
         <h1 class="font-heading text-5xl md:text-7xl my-6" style="color: var(--color-accent);">Boby & Alvinda</h1>
         <div class="my-8">
-            <img src="https://lh3.googleusercontent.com/d/1X7MXMSmgTGJ1NPQy01S7StAKAhAtfzf1" 
+            <img src="./poto/HeroSection.jpg" 
                  alt="[Foto Boby & Alvinda]" 
                  class="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover shadow-xl border-4 border-white"
-                 onerror="this.src='https://placehold.co/256x256/FDFDF6/BFA181?text=B+&+A'">
+                 onerror="this.src='https://placehold.co/256x256/E6EEF7/3B6EA5?text=B+&+A'">
         </div>
         <p class="text-base mb-2" style="color: var(--color-text);">Kepada Yth.</p>
         <p class="text-lg font-bold mb-8" style="color: var(--color-text);">Tamu Undangan</p>
         <button id="open-invitation" class="bg-accent text-white font-body py-3 px-8 rounded-full shadow-lg transition duration-300 hover:bg-opacity-80">
             Buka Undangan
         </button>
+    </div>
+
+    <!-- Lightbox Overlay -->
+    <div id="lightbox-overlay" role="dialog" aria-modal="true">
+        <img id="lightbox-image" alt="Full size" />
     </div>
 
     <!-- Konten Utama (Tersembunyi Awalnya) -->
@@ -225,7 +255,7 @@
 
         <!-- Bagian Hero -->
         <section id="hero" class="h-screen min-h-[600px] w-full flex items-center justify-center relative text-center text-white p-4 bg-elegant-pattern"
-            style="background-image: url('https://lh3.googleusercontent.com/d/1X7MXMSmgTGJ1NPQy01S7StAKAhAtfzf1'); background-size: cover; background-position: center;">
+            style="background-image: url('./poto/HeroSection.jpg'); background-size: cover; background-position: center;">
             
             <!-- Overlay Gelap untuk Kontras Teks -->
             <div class="absolute inset-0 bg-black/40 z-0"></div>
@@ -238,17 +268,22 @@
                 <p class="font-body text-lg md:text-2xl tracking-wider">09 November 2025</p>
                 <!-- decorative divider -->
                 <svg class="section-divider" viewBox="0 0 400 30" xmlns="http://www.w3.org/2000/svg">
-                    <g fill="none" stroke="rgba(191,161,129,0.7)" stroke-width="2">
+                    <g fill="none" stroke="rgba(59,110,165,0.8)" stroke-width="2">
                         <path d="M10 15 H160"/>
                         <path d="M240 15 H390"/>
-                        <path d="M200 4 c-6 6-6 16 0 22 c6-6 6-16 0-22z" fill="rgba(191,161,129,0.7)"/>
+                        <path d="M200 4 c-6 6-6 16 0 22 c6-6 6-16 0-22z" fill="rgba(59,110,165,0.8)"/>
                     </g>
                 </svg>
+                <!-- hero floral corners -->
+                <svg class="floral-corner floral-top-left" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%233B6EA5" d="M5 95c20-5 40-25 45-45C55 30 70 15 95 5 75 25 70 45 60 60 45 70 25 75 5 95z"/></svg>
+                <svg class="floral-corner floral-bottom-right" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%233B6EA5" d="M5 95c20-5 40-25 45-45C55 30 70 15 95 5 75 25 70 45 60 60 45 70 25 75 5 95z"/></svg>
             </div>
         </section>
 
         <!-- Bagian Mempelai -->
-        <section id="couple" class="py-20 md:py-32 px-6 text-center fade-in-section">
+        <section id="couple" class="py-20 md:py-32 px-6 text-center fade-in-section section-decor">
+            <svg class="floral-large floral-left" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%233B6EA5" d="M5 95c20-5 40-25 45-45C55 30 70 15 95 5 75 25 70 45 60 60 45 70 25 75 5 95z"/></svg>
+            <svg class="floral-large floral-right" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%233B6EA5" d="M5 95c20-5 40-25 45-45C55 30 70 15 95 5 75 25 70 45 60 60 45 70 25 75 5 95z"/></svg>
             <div class="max-w-4xl mx-auto">
                 <p class="text-lg md:text-xl leading-relaxed mb-12">
                     "Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih dan sayang."
@@ -259,18 +294,32 @@
                 <div class="flex flex-col md:flex-row items-center justify-center gap-12 md:gap-20">
                     <!-- Pengantin Pria -->
                     <div class="w-full md:w-1/2">
-                        <h2 class="font-heading text-5xl text-accent mb-4">Boby Chandra Halim, S.H</h2>
+                        <div class="mb-5 flex justify-center">
+                            <img src="./poto/photocowo.jpg"
+                                 alt="Foto Mempelai Pria"
+                                 class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg border-4 border-white elegant-border transform scale-125 cursor-zoom-in zoomable-photo"
+                                 data-fullsrc="./poto/photocowo.jpg"
+                                 onerror="this.src='https://placehold.co/160x160/E6EEF7/3B6EA5?text=Pria'">
+                        </div>
+                        <h2 class="font-heading text-5xl text-black mb-4">Boby Chandra Halim, S.H</h2>
                         <p class="text-lg font-medium">Putra dari</p>
                         <p class="text-base mt-2">Bapak Nusrizal</p>
                         <p class="text-base">&</p>
                         <p class="text-base">Ibu Yelvi</p>
                     </div>
                     
-                    <div class="font-heading text-6xl text-accent">&</div>
+                    <div class="font-heading text-6xl text-black">&</div>
 
                     <!-- Pengantin Wanita -->
                     <div class="w-full md:w-1/2">
-                        <h2 class="font-heading text-5xl text-accent mb-4">Alvinda Amalia Rizkita, S.Kom</h2>
+                        <div class="mb-5 flex justify-center">
+                            <img src="./poto/photocewe.jpg"
+                                 alt="Foto Mempelai Wanita"
+                                 class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover shadow-lg border-4 border-white elegant-border transform scale-125 cursor-zoom-in zoomable-photo"
+                                 data-fullsrc="./poto/photocewe.jpg"
+                                 onerror="this.src='https://placehold.co/160x160/E6EEF7/3B6EA5?text=Wanita'">
+                        </div>
+                        <h2 class="font-heading text-5xl text-black mb-4">Alvinda Amalia Rizkita, S.Kom</h2>
                         <p class="text-lg font-medium">Putri dari</p>
                         <p class="text-base mt-2">Bapak AKBP (Purn) Amril, S.Sos., S.H., M.H.</p>
                         <p class="text-base">&</p>
@@ -283,7 +332,7 @@
         <!-- Bagian Hitung Mundur -->
         <section id="countdown-section" class="py-20 md:py-24 px-6 text-center bg-gray-50 fade-in-section">
             <div class="max-w-4xl mx-auto">
-                <h2 class="font-heading text-4xl md:text-5xl text-accent mb-4">Menuju Hari Bahagia</h2>
+                <h2 class="font-heading text-4xl md:text-5xl text-black mb-4">Menuju Hari Bahagia</h2>
                 <p class="text-lg mb-10">Hitung mundur menuju acara kami</p>
                 <div id="countdown-timer" class="flex justify-center gap-4 md:gap-8">
                     <!-- Days -->
@@ -311,14 +360,16 @@
         </section>
 
         <!-- Bagian Acara -->
-        <section id="event-details" class="py-20 md:py-32 px-6 text-center fade-in-section">
+        <section id="event-details" class="py-20 md:py-32 px-6 text-center fade-in-section section-decor">
+            <svg class="floral-large floral-left" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%233B6EA5" d="M5 95c20-5 40-25 45-45C55 30 70 15 95 5 75 25 70 45 60 60 45 70 25 75 5 95z"/></svg>
+            <svg class="floral-large floral-right" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%233B6EA5" d="M5 95c20-5 40-25 45-45C55 30 70 15 95 5 75 25 70 45 60 60 45 70 25 75 5 95z"/></svg>
             <div class="max-w-6xl mx-auto">
-                <h2 class="font-heading text-5xl md:text-6xl text-accent mb-16">Save The Date</h2>
+                <h2 class="font-heading text-5xl md:text-6xl text-black mb-16">Save The Date</h2>
                 <div class="flex flex-col md:flex-row justify-center gap-8 md:gap-12">
                     
                     <!-- Card Akad Nikah -->
                     <div class="bg-white p-8 md:p-12 rounded-2xl elegant-border w-full max-w-lg transform transition duration-500 hover:scale-105">
-                        <h3 class="font-heading text-4xl text-accent mb-6">Akad Nikah</h3>
+                        <h3 class="font-heading text-4xl text-black mb-6">Akad Nikah</h3>
                         <p class="font-body text-lg font-semibold mb-2">Sabtu, 02 November 2025</p>
                         <p class="font-body text-lg mb-6">Pukul 08:00 WIB</p>
                         <p class="font-body text-base mb-2 font-medium">Labersa Grand Hotel & Convection Centers</p>
@@ -344,7 +395,7 @@
                     
                     <!-- Card Resepsi -->
                     <div class="bg-white p-8 md:p-12 rounded-2xl elegant-border w-full max-w-lg transform transition duration-500 hover:scale-105">
-                        <h3 class="font-heading text-4xl text-accent mb-6">Resepsi</h3>
+                        <h3 class="font-heading text-4xl text-black mb-6">Resepsi</h3>
                         <p class="font-body text-lg font-semibold mb-2">Sabtu, 09 November 2025</p>
                         <p class="font-body text-lg mb-6">Pukul 12:30 WIB</p>
                         <p class="font-body text-base mb-2 font-medium">Kediaman Mempelai Wanita</p>
@@ -373,32 +424,88 @@
         </section>
 
         <!-- Bagian Galeri Foto -->
-        <section id="gallery" class="py-20 md:py-24 px-6 text-center bg-gray-50 fade-in-section">
+        <section id="gallery" class="py-20 md:py-24 px-6 text-center bg-gray-50 fade-in-section section-decor">
+            <svg class="floral-large floral-left" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%233B6EA5" d="M5 95c20-5 40-25 45-45C55 30 70 15 95 5 75 25 70 45 60 60 45 70 25 75 5 95z"/></svg>
+            <svg class="floral-large floral-right" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%233B6EA5" d="M5 95c20-5 40-25 45-45C55 30 70 15 95 5 75 25 70 45 60 60 45 70 25 75 5 95z"/></svg>
             <div class="max-w-6xl mx-auto">
-                <h2 class="font-heading text-5xl md:text-6xl text-accent mb-16">Momen Bahagia Kami</h2>
+                <h2 class="font-heading text-5xl md:text-6xl text-black mb-16">Momen Bahagia Kami</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-                    <!-- Foto 1 -->
+                    <!-- Foto 3 -->
                     <div class="rounded-xl overflow-hidden elegant-border">
-                        <img src="https://lh3.googleusercontent.com/d/1BLARmC3kZla8vfAOl-w67Izc5Ktzli9o" 
-                             alt="[Galeri Foto 1]" 
-                             class="w-full h-auto object-cover transform transition duration-500 hover:scale-110"
-                             onerror="this.src='https://placehold.co/600x800/FDFDF6/BFA181?text=Galeri+1'">
+                        <img src="./poto/photo3.jpg" 
+                             alt="Momen Bahagia 3" 
+                             class="w-full h-auto object-cover transform transition duration-500 hover:scale-110 cursor-zoom-in zoomable-photo"
+                             data-fullsrc="./poto/photo3.jpg"
+                             onerror="this.src='https://placehold.co/600x800/E6EEF7/3B6EA5?text=Photo+3'">
                     </div>
-                    <!-- Foto 2 -->
+                    <!-- Foto 4 -->
                     <div class="rounded-xl overflow-hidden elegant-border">
-                        <img src="https://lh3.googleusercontent.com/d/16JC6Dv8aZCPp0lTgkFaPWnbQl77Gm2mQ" 
-                             alt="[Galeri Foto 2]" 
-                             class="w-full h-auto object-cover transform transition duration-500 hover:scale-110"
-                             onerror="this.src='https://placehold.co/600x800/FDFDF6/BFA181?text=Galeri+2'">
+                        <img src="./poto/photo4.jpg" 
+                             alt="Momen Bahagia 4" 
+                             class="w-full h-auto object-cover transform transition duration-500 hover:scale-110 cursor-zoom-in zoomable-photo"
+                             data-fullsrc="./poto/photo4.jpg"
+                             onerror="this.src='https://placehold.co/600x800/E6EEF7/3B6EA5?text=Photo+4'">
+                    </div>
+                    <!-- Foto 5 -->
+                    <div class="rounded-xl overflow-hidden elegant-border">
+                        <img src="./poto/photo5.jpg" 
+                             alt="Momen Bahagia 5" 
+                             class="w-full h-auto object-cover transform transition duration-500 hover:scale-110 cursor-zoom-in zoomable-photo"
+                             data-fullsrc="./poto/photo5.jpg"
+                             onerror="this.src='https://placehold.co/600x800/E6EEF7/3B6EA5?text=Photo+5'">
+                    </div>
+                    <!-- Foto 6 -->
+                    <div class="rounded-xl overflow-hidden elegant-border">
+                        <img src="./poto/photo6.jpg" 
+                             alt="Momen Bahagia 6" 
+                             class="w-full h-auto object-cover transform transition duration-500 hover:scale-110 cursor-zoom-in zoomable-photo"
+                             data-fullsrc="./poto/photo6.jpg"
+                             onerror="this.src='https://placehold.co/600x800/E6EEF7/3B6EA5?text=Photo+6'">
+                    </div>
+                    <!-- Foto 7 -->
+                    <div class="rounded-xl overflow-hidden elegant-border">
+                        <img src="./poto/photo7.jpg" 
+                             alt="Momen Bahagia 7" 
+                             class="w-full h-auto object-cover transform transition duration-500 hover:scale-110 cursor-zoom-in zoomable-photo"
+                             data-fullsrc="./poto/photo7.jpg"
+                             onerror="this.src='https://placehold.co/600x800/E6EEF7/3B6EA5?text=Photo+7'">
+                    </div>
+                    <!-- Foto 8 -->
+                    <div class="rounded-xl overflow-hidden elegant-border">
+                        <img src="./poto/photo8.jpg" 
+                             alt="Momen Bahagia 8" 
+                             class="w-full h-auto object-cover transform transition duration-500 hover:scale-110 cursor-zoom-in zoomable-photo"
+                             data-fullsrc="./poto/photo8.jpg"
+                             onerror="this.src='https://placehold.co/600x800/E6EEF7/3B6EA5?text=Photo+8'">
+                    </div>
+
+                    </div>
+                    <!-- Foto 10 -->
+                    <div class="rounded-xl overflow-hidden elegant-border">
+                        <img src="./poto/photo10.jpg" 
+                             alt="Momen Bahagia 10" 
+                             class="w-full h-auto object-cover transform transition duration-500 hover:scale-110 cursor-zoom-in zoomable-photo"
+                             data-fullsrc="./poto/photo10.jpg"
+                             onerror="this.src='https://placehold.co/600x800/E6EEF7/3B6EA5?text=Photo+10'">
+                    </div>
+                    <!-- Foto 11 -->
+                    <div class="rounded-xl overflow-hidden elegant-border">
+                        <img src="./poto/photo11.jpg" 
+                             alt="Momen Bahagia 11" 
+                             class="w-full h-auto object-cover transform transition duration-500 hover:scale-110 cursor-zoom-in zoomable-photo"
+                             data-fullsrc="./poto/photo11.jpg"
+                             onerror="this.src='https://placehold.co/600x800/E6EEF7/3B6EA5?text=Photo+11'">
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Bagian RSVP -->
-        <section id="rsvp" class="py-20 md:py-32 px-6 text-center fade-in-section">
+        <section id="rsvp" class="py-20 md:py-32 px-6 text-center fade-in-section section-decor">
+            <svg class="floral-large floral-left" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%233B6EA5" d="M5 95c20-5 40-25 45-45C55 30 70 15 95 5 75 25 70 45 60 60 45 70 25 75 5 95z"/></svg>
+            <svg class="floral-large floral-right" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%233B6EA5" d="M5 95c20-5 40-25 45-45C55 30 70 15 95 5 75 25 70 45 60 60 45 70 25 75 5 95z"/></svg>
             <div class="max-w-lg mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-2xl">
-                <h2 class="font-heading text-4xl md:text-5xl text-accent mb-8">Konfirmasi Kehadiran</h2>
+                <h2 class="font-heading text-4xl md:text-5xl text-black mb-8">Konfirmasi Kehadiran</h2>
                 <p class="text-base mb-8">Mohon konfirmasi kehadiran Anda untuk membantu kami mempersiapkan acara.</p>
                 
                 <form id="rsvp-form" class="space-y-6 text-left">
@@ -436,9 +543,11 @@
         </section>
 
         <!-- Bagian Ucapan Tamu (Guestbook) -->
-        <section id="guestbook" class="py-20 md:py-24 px-6 text-center bg-gray-50 fade-in-section">
+        <section id="guestbook" class="py-20 md:py-24 px-6 text-center bg-gray-50 fade-in-section section-decor">
+            <svg class="floral-large floral-left" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%233B6EA5" d="M5 95c20-5 40-25 45-45C55 30 70 15 95 5 75 25 70 45 60 60 45 70 25 75 5 95z"/></svg>
+            <svg class="floral-large floral-right" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%233B6EA5" d="M5 95c20-5 40-25 45-45C55 30 70 15 95 5 75 25 70 45 60 60 45 70 25 75 5 95z"/></svg>
             <div class="max-w-4xl mx-auto">
-                <h2 class="font-heading text-4xl md:text-5xl text-accent mb-8">Untaian Doa & Kata</h2>
+                <h2 class="font-heading text-4xl md:text-5xl text-black mb-8">Untaian Doa & Kata</h2>
                 <p class="text-lg italic leading-relaxed max-w-2xl mx-auto mb-12">
                     "Satu kata, satu doa, adalah ukiran cinta abadi. Tuliskan untaian kata terindah Anda untuk kami kenang selamanya."
                 </p>
@@ -480,10 +589,12 @@
         </section>
 
         <!-- Footer -->
-        <footer class="text-center py-16 px-6 fade-in-section">
+        <footer class="text-center py-16 px-6 fade-in-section section-decor">
+            <svg class="floral-large floral-left" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%233B6EA5" d="M5 95c20-5 40-25 45-45C55 30 70 15 95 5 75 25 70 45 60 60 45 70 25 75 5 95z"/></svg>
+            <svg class="floral-large floral-right" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path fill="%233B6EA5" d="M5 95c20-5 40-25 45-45C55 30 70 15 95 5 75 25 70 45 60 60 45 70 25 75 5 95z"/></svg>
             <p class="text-base mb-4">Merupakan suatu kehormatan dan kebahagiaan bagi kami,<br>apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu.</p>
             <p class="text-lg font-medium mb-8">Terima kasih,</p>
-            <h3 class="font-heading text-5xl text-accent">Boby & Alvinda</h3>
+            <h3 class="font-heading text-5xl text-black">Boby & Alvinda</h3>
         </footer>
     </div>
 
@@ -756,6 +867,31 @@
             // Gunakan `background-position-y` untuk efek parallax ringan
             // Kecepatan 0.3 membuat efeknya subtil
             heroSection.style.backgroundPosition = `center ${scrollY * 0.3}px`;
+        });
+
+        // --- 8. Lightbox Logic for zoomable photos ---
+        const lightboxOverlay = document.getElementById('lightbox-overlay');
+        const lightboxImage = document.getElementById('lightbox-image');
+        const zoomables = document.querySelectorAll('.zoomable-photo');
+
+        zoomables.forEach(img => {
+            img.addEventListener('click', () => {
+                const fullSrc = img.getAttribute('data-fullsrc') || img.src;
+                lightboxImage.src = fullSrc;
+                lightboxOverlay.classList.add('visible');
+            });
+        });
+
+        lightboxOverlay.addEventListener('click', () => {
+            lightboxOverlay.classList.remove('visible');
+            lightboxImage.src = '';
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                lightboxOverlay.classList.remove('visible');
+                lightboxImage.src = '';
+            }
         });
 
     </script>
